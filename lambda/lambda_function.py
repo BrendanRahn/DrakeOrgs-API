@@ -33,9 +33,9 @@ def get_dynamo(parameters: dict):
     
     return {
         'statusCode': '200',
-        'body': json.dumps(data["Item"]) if "Item" in data else f'(error, item {key} not found)',
-        'ping': 'pong'
+        'body': json.dumps(data["Item"]) if "Item" in data else f'(error, item {key} not found)'
     }
+
 
 
 def lambda_handler(event, context):
@@ -52,7 +52,8 @@ def lambda_handler(event, context):
 
     req_route_key = event["routeKey"] if "routeKey" in event else None
 
-
+    if req_route_key == "GET /DrakeOrgs-API/ping":
+        return "pong"
 
     if req_route_key == "GET /DrakeOrgs-API/get":
 
@@ -92,3 +93,4 @@ def error_response(err: str):
         "statusCode": 400,
         "body": err
     }
+

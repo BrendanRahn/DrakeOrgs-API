@@ -16,8 +16,7 @@ COPY ./lambda_rie ${rie_DIR}
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-# Set runtime interface client as default command for the container runtime
+
 ENTRYPOINT [ "/lambda_rie/aws-lambda-rie" ]
-# Pass the name of the function handler as an argument to the runtime
+
 CMD [ "/usr/local/bin/python", "-m", "awslambdaric", "function/lambda_function.lambda_handler"]
-# CMD [ "function/lambda_function.lambda_handler"]
