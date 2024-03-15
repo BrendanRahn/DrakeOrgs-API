@@ -27,7 +27,7 @@ The lambda can be locally tested inside a docker container (yay!)
 -Second, build and run the docker container with the command
     "docker compose up"
 
-    This should create a running container hosting the lambda
+This should create a running container hosting the lambda
 
 # Local testing
 The container hosts a server that run the AWS lambda Runtime Interface Client, which takes incoming network requests and passes them to the lambda as an event. 
