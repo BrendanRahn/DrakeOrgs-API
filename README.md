@@ -38,4 +38,6 @@ Tests have been written in the /tests folder in the repo that use the python req
 
 
 
-
+# TODO:
+- Creat script for compressing lambda to zip file and uploading to AWS
+- Make mounted volume for container so changes made to the lambda file(s) can be reflected in the container without reloading (need to make sure that is possible) 
