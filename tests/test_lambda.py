@@ -32,5 +32,19 @@ def test_get_org():
 
     return response.text
 
-print(ping())
-print(test_get_org())
+def test_get_all():
+    event = json.dumps({
+            "routeKey": "GET /DrakeOrgs-API/get/all"
+        })
+    
+    response = requests.get(
+        CONTAINER_URL,
+        data=event
+    )
+
+    return response.text
+
+# print(ping())
+# print(test_get_org())
+
+print(test_get_all())

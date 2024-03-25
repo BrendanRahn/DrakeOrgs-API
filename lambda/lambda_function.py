@@ -15,9 +15,16 @@ def respond(err, res=None):
         },
     }
 
+def get_all_orgs():
+    table = dynamo.Table("student-org-data")
+    response = table.scan()
+    data = response["Items"]
+    return {
+        "statusCode": "200",
+        "body": json.dumps(data)
+    }
 
-
-def get_dynamo(parameters: dict):
+def get_single_org(parameters: dict):
     
     table = dynamo.Table("student-org-data")
     key = {"org-name": parameters["org-name"]}
@@ -54,6 +61,9 @@ def lambda_handler(event, context):
 
     if req_route_key == "GET /DrakeOrgs-API/ping":
         return "pong"
+    
+    if req_route_key == "GET /DrakeOrgs-API/get/all":
+        return get_all_orgs()
 
     if req_route_key == "GET /DrakeOrgs-API/get":
 
@@ -62,7 +72,7 @@ def lambda_handler(event, context):
         validation = validate_event(event)
 
         if type(validation) == dict:
-            return get_dynamo(validation)
+            return get_single_org(validation)
         else:
             return error_response(validation)
     
