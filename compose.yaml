@@ -3,6 +3,8 @@
 services:
   lambda:
     image: lambda_image
+    volumes:
+      - ./lambda:/function
     build: 
       context: lambda
       dockerfile: ./Dockerfile

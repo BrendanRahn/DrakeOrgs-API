@@ -44,7 +44,7 @@ def test_get_all():
 
     return response.text
 
-# print(ping())
-# print(test_get_org())
+print(ping())
+print(test_get_org())
 
-print(test_get_all())
+# print(test_get_all())
