@@ -1,6 +1,6 @@
 import json
 
-import org_data.org_data_handler as org_data_handler
+from org_data import org_data_handler
 
 
 
