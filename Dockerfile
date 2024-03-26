@@ -9,7 +9,7 @@ ARG rie_DIR
 
 # Copy function code
 RUN mkdir -p ${FUNCTION_DIR}
-COPY ./lambda ${FUNCTION_DIR}
+# COPY ./lambda ${FUNCTION_DIR}
 COPY ./lambda_rie ${rie_DIR}
 
 # Install the function's dependencies
