@@ -28,11 +28,11 @@ def post_event(event: dict):
     with create_db_connection() as conn:
         cur = conn.cursor()
 
-        query = f'INSERT INTO events (title, description, start_date)
+        query = f'''INSERT INTO events (title, description, start_date)
                   VALUES 
                         (   {event["title"]}, 
                             {event["description"]}, 
-                            {event["start_date"]} )'
+                            {event["start_date"]} )'''
         cur.execute(query)
 
         data = cur.fetchall()
