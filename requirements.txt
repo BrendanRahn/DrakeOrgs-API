@@ -1,2 +1,4 @@
 boto3
 awslambdaric
+psycopg2-binary
+python-dotenv

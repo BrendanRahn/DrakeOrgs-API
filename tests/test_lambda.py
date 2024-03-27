@@ -4,6 +4,7 @@
 import requests
 import json
 
+
 CONTAINER_URL = "http://localhost:9000/2015-03-31/functions/function/invocations"
 
 def ping():
@@ -44,7 +45,20 @@ def test_get_all():
 
     return response.text
 
-print(ping())
-print(test_get_org())
+def test_get_all_events():
+    event = json.dumps({
+        "routeKey": "GET /DrakeOrgs-API/events/get/all"
+    })
 
-# print(test_get_all())
+    response = requests.get(
+        CONTAINER_URL,
+        data=event
+    )
+
+    return response.text
+
+# print(ping())
+# print(test_get_org())
+print(test_get_all())
+
+# print(test_get_all_events())

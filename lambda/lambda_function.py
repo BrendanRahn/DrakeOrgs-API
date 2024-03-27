@@ -1,6 +1,8 @@
 import json
+import os
 
-from org_data import org_data_handler
+from .org_data import org_data_handler
+from .events import event_handler
 
 
 
@@ -21,13 +23,17 @@ def lambda_handler(event, context):
 
     if req_route_key == "GET /DrakeOrgs-API/get":
 
-        validation = org_data_handler.validate_event(event)
+        validation = org_data_handler.validate_lambda_event(event)
 
         if validation["is_valid"] == True:
             return org_data_handler.get_org_by_name(validation["body"])
         
         elif validation["is_valid"] == False:
             return error_response(validation["body"])
+        
+
+    if req_route_key == "GET /DrakeOrgs-API/events/get/all":
+        return event_handler.get_all_events()
 
     else:
         return error_response(

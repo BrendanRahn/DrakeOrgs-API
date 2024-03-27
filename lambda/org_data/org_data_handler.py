@@ -3,7 +3,7 @@ import json
 
 dynamo = boto3.resource('dynamodb')
 
-def validate_event(event: dict):
+def validate_lambda_event(event: dict):
 
     if "queryStringParameters" not in event:
             return {
