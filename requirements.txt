@@ -1,0 +1,4 @@
+boto3
+awslambdaric
+pg8000
+python-dotenv
