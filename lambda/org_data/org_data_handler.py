@@ -24,10 +24,10 @@ def validate_lambda_event(event: dict):
         }
         return parameters
     
-def get_org_by_name(parameters: dict):
+def get_org_by_name(org_name: str):
 
     table = dynamo.Table("student-org-data")
-    key = {"org-name": parameters["org-name"]}
+    key = {"org-name": org_name}
     data = table.get_item(Key=key)
 
 
