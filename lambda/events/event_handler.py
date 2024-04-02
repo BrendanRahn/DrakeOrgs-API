@@ -1,12 +1,19 @@
 import pg8000.dbapi as db
 import os
+import ssl
 
 from dotenv import load_dotenv
 load_dotenv()
 
 
 
-def create_db_connection():
+def create_db_connection(): 
+    
+
+    ssl_context = ssl.create_default_context()
+    ssl_context.verify_mode = ssl.CERT_REQUIRED
+    ssl_context.load_verify_locations('us-east-1-bundle.pem')
+
 
     try:
         conn = db.connect(
@@ -14,38 +21,37 @@ def create_db_connection():
             port = os.getenv("PORT"),
             database = os.getenv("DB_NAME"),
             user = os.getenv("DB_USERNAME"),
-            password = os.getenv("DB_PASSWORD")
+            password = os.getenv("DB_PASSWORD"),
+            ssl_context=ssl_context
         )
 
         return conn
-    except:
-        raise "unable to connect to db"
+    except Exception as error:
+        raise error
 
 
 def post_event(event: dict):
+
     conn = create_db_connection()
 
-    with create_db_connection() as conn:
-        cur = conn.cursor()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM events")
+    data = cur.fetchall()
 
-        query = f'''INSERT INTO events (title, description, start_date)
-                  VALUES 
-                        (   {event["title"]}, 
-                            {event["description"]}, 
-                            {event["start_date"]} )'''
-        cur.execute(query)
+    for row in data:
+        row = json_seralize_event(row)
 
-        data = cur.fetchall()
-
-    return data
+    conn.close()
+    return (data[0])
 
 def get_all_events():
+    return create_db_connection()
 
-    with create_db_connection() as conn:
-        cur = conn.cursor()
+    conn = create_db_connection()
+    cur = conn.cursor()
 
-        cur.execute("SELECT * FROM events")
-        data = cur.fetchall()
+    cur.execute("SELECT * FROM events")
+    data = cur.fetchall()
 
     #change
     #convert list to dict to make json seralizable
