@@ -1,4 +1,4 @@
-ARG FUNCTION_DIR="/function"
+ARG FUNCTION_DIR="/lambda"
 ARG rie_DIR="/lambda_rie"
 
 FROM python:3.12-slim
@@ -14,10 +14,11 @@ COPY ./lambda_rie ${rie_DIR}
 
 # Install the function's dependencies
 COPY ./requirements.txt .
+COPY ./us-east-1-bundle.pem .
 
 RUN pip install -r requirements.txt
 
 
 ENTRYPOINT [ "/lambda_rie/aws-lambda-rie" ]
 
-CMD [ "/usr/local/bin/python", "-m", "awslambdaric", "function/lambda_function.lambda_handler"]
+CMD [ "/usr/local/bin/python", "-m", "awslambdaric", "lambda/lambda_function.lambda_handler"]

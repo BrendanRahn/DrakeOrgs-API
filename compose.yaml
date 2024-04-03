@@ -4,7 +4,7 @@ services:
   lambda:
     image: lambda_image
     volumes:
-      - ./lambda:/function
+      - ./lambda:/lambda
     build: 
       context: ./
       dockerfile: Dockerfile
@@ -14,5 +14,6 @@ services:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+    # working_dir: /lambda
 
 

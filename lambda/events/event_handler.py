@@ -9,7 +9,7 @@ load_dotenv()
 
 def create_db_connection(): 
     
-
+    #pg8000 needs CA file to be passed to it, make sure RDS CA file is in root dir of 
     ssl_context = ssl.create_default_context()
     ssl_context.verify_mode = ssl.CERT_REQUIRED
     ssl_context.load_verify_locations('us-east-1-bundle.pem')
@@ -35,17 +35,11 @@ def post_event(event: dict):
     conn = create_db_connection()
 
     cur = conn.cursor()
-    cur.execute("SELECT * FROM events")
-    data = cur.fetchall()
+    
 
-    for row in data:
-        row = json_seralize_event(row)
-
-    conn.close()
-    return (data[0])
+    
 
 def get_all_events():
-    return create_db_connection()
 
     conn = create_db_connection()
     cur = conn.cursor()
@@ -53,7 +47,6 @@ def get_all_events():
     cur.execute("SELECT * FROM events")
     data = cur.fetchall()
 
-    #change
     #convert list to dict to make json seralizable
     serialized_data = [json_seralize_event(row) for row in data]
         
@@ -69,6 +62,6 @@ def json_seralize_event(event: list):
     } 
 
 
-def validate_event_data(data: dict):
+def validate_handler_data(data: dict):
     #check validity of title and
     print("")
