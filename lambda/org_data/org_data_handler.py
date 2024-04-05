@@ -1,7 +1,11 @@
 import boto3
 import json
 
-dynamo = boto3.resource('dynamodb')
+
+
+def connect_dynamo(table_name):
+     dynamo = boto3.resource('dynamodb')
+     return dynamo.Table(table_name)
 
 def validate_lambda_event(event: dict):
 
@@ -26,7 +30,8 @@ def validate_lambda_event(event: dict):
     
 def get_org_by_name(org_name: str):
 
-    table = dynamo.Table("student-org-data")
+
+    table = connect_dynamo("student-org-data")
     key = {"org-name": org_name}
     data = table.get_item(Key=key)
 
@@ -42,7 +47,7 @@ def get_org_by_name(org_name: str):
 
 
 def get_all_orgs():
-    table = dynamo.Table("student-org-data")
+    table = connect_dynamo("student-org-data")
     response = table.scan()
     data = response["Items"]
     return {

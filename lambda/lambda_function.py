@@ -34,6 +34,9 @@ def lambda_handler(event, context):
 
     if req_route_key == "GET /DrakeOrgs-API/events/get/all":
         return event_handler.get_all_events()
+    
+    if req_route_key == "POST /DrakeOrgs-API/events/post-event":
+        return "here"
 
     else:
         return error_response(

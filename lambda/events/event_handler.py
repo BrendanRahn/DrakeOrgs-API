@@ -1,67 +1,35 @@
-import pg8000.dbapi as db
-import os
-import ssl
-
-from dotenv import load_dotenv
-load_dotenv()
+import boto3
+import json
 
 
 
-def create_db_connection(): 
-    
-    #pg8000 needs CA file to be passed to it, make sure RDS CA file is in root dir of 
-    ssl_context = ssl.create_default_context()
-    ssl_context.verify_mode = ssl.CERT_REQUIRED
-    ssl_context.load_verify_locations('us-east-1-bundle.pem')
+def connect_dynamo(table_name):
+     dynamo = boto3.resource('dynamodb')
+     return dynamo.Table(table_name)
+
+# def post_event(event: dict):
 
 
-    try:
-        conn = db.connect(
-            host = os.getenv("ENDPOINT"),
-            port = os.getenv("PORT"),
-            database = os.getenv("DB_NAME"),
-            user = os.getenv("DB_USERNAME"),
-            password = os.getenv("DB_PASSWORD"),
-            ssl_context=ssl_context
-        )
-
-        return conn
-    except Exception as error:
-        raise error
-
-
-def post_event(event: dict):
-
-    conn = create_db_connection()
-
-    cur = conn.cursor()
     
 
     
 
 def get_all_events():
 
-    conn = create_db_connection()
-    cur = conn.cursor()
+    table = connect_dynamo("events")
+    response = table.scan()
+    data = response["Items"]
 
-    cur.execute("SELECT * FROM events")
-    data = cur.fetchall()
-
-    #convert list to dict to make json seralizable
-    serialized_data = [json_seralize_event(row) for row in data]
-        
-    return serialized_data
+    return {"status_code": 200,
+            "body": json.dumps(data)}
+    
 
     
-def json_seralize_event(event: list):
-    return {
-        "id": event[0],
-        "title": event[1],
-        "description": event[2],
-        "date": str(event[3])
-    } 
+
+#
+def validate_event_data(data: dict):
+    
 
 
-def validate_handler_data(data: dict):
-    #check validity of title and
+
     print("")
