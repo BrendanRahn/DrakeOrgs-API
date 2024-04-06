@@ -15,41 +15,40 @@ def lambda_handler(event, context):
     #handle routes 
     req_route_key = event["routeKey"] if "routeKey" in event else None
 
-    if req_route_key == "GET /DrakeOrgs-API/ping":
-        return "pong"
-    
-    if req_route_key == "GET /DrakeOrgs-API/get/all":
-        return org_data_handler.get_all_orgs()
-
-    if req_route_key == "GET /DrakeOrgs-API/get":
-
-        org_validation = org_data_handler.validate_org_request(event)
-
-        if org_validation["is_valid"] == True:
-            return org_data_handler.get_org_by_name(org_validation["body"])
+    match req_route_key:
         
-        elif org_validation["is_valid"] == False:
-            return error_response(org_validation["body"])
+        case "GET /DrakeOrgs-API/ping":
+            return "pong"
+
+        case "GET /DrakeOrgs-API/get/all":
+            return org_data_handler.get_all_orgs()
+
+        case "GET /DrakeOrgs-API/get":
+            org_validation = org_data_handler.validate_org_request(event)
+
+            if org_validation["is_valid"] == True:
+                return org_data_handler.get_org_by_name(org_validation["body"])
+            
+            elif org_validation["is_valid"] == False:
+                return error_response(org_validation["body"])
         
+        case "GET /DrakeOrgs-API/events/get/all":
+            return event_handler.get_all_events()
 
-    if req_route_key == "GET /DrakeOrgs-API/events/get/all":
-        return event_handler.get_all_events()
-    
-    if req_route_key == "PUT /DrakeOrgs-API/events/post-event":
+        case "PUT /DrakeOrgs-API/events/post-event":
+            event_validation = event_handler.validate_event_data(event["body"])
 
-        event_validation = event_handler.validate_event_data(event["body"])
+            if event_validation["is_valid"] == False:
+                return error_response(event_validation["body"])
+            
+            elif event_validation["is_valid"] == True:
+                return event_handler.put_event(event_validation["body"])
 
-        if event_validation["is_valid"] == False:
-            return error_response(event_validation["body"])
-        
-        elif event_validation["is_valid"] == True:
-            return event_handler.put_event(event_validation["body"])
-
-
-    else:
-        return error_response(
+        case _ :
+            return error_response(
             f'(error, path "{req_route_key}" not found. Check cloudwatch accounts for debugging)'
             )
+
         
 
 

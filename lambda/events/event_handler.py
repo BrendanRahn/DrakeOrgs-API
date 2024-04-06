@@ -31,8 +31,7 @@ def get_all_events():
     response = table.scan()
     data = response["Items"]
 
-    return {"status_code": 200,
-            "body": json.dumps(data)}
+    return json.dumps(data)
     
 
 
