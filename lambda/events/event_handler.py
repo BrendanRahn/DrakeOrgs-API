@@ -9,18 +9,19 @@ def connect_dynamo(table_name):
      dynamo = boto3.resource('dynamodb')
      return dynamo.Table(table_name)
 
-def post_event(event: dict):
+def put_event(event: dict):
+
 
     table = connect_dynamo("events")
     try:
         response = table.put_item(Item=event)
         return {
             "status": 200,
-            "body": response
+            "body": "event posted successfully"
         }
 
     except Exception as error:
-        return error
+        return json.dumps(error.__dict__)
 
 
 
@@ -54,7 +55,6 @@ def validate_event_data(body: dict):
     if type(event_description) != str:
         return type_not_string("description")
     
-
 
 
     ###########################

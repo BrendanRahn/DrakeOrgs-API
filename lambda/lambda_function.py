@@ -35,14 +35,15 @@ def lambda_handler(event, context):
     if req_route_key == "GET /DrakeOrgs-API/events/get/all":
         return event_handler.get_all_events()
     
-    if req_route_key == "POST /DrakeOrgs-API/events/post-event":
-        #event data should be in the body of the post request
+    if req_route_key == "PUT /DrakeOrgs-API/events/post-event":
+
         event_validation = event_handler.validate_event_data(event["body"])
+
         if event_validation["is_valid"] == False:
             return error_response(event_validation["body"])
         
         elif event_validation["is_valid"] == True:
-            return event_handler.post_event(event_validation["body"])
+            return event_handler.put_event(event_validation["body"])
 
 
     else:

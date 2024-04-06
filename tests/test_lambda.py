@@ -57,8 +57,26 @@ def test_get_all_events():
 
     return response.text
 
+def test_post_event():
+    event = json.dumps({
+        "routeKey": "POST /DrakeOrgs-API/events/post-event",
+        "body": {
+            "title": "test",
+            "description": "this is a test",
+            "date": "02-10-2004"
+        }
+    })
+
+    response = requests.post(
+        CONTAINER_URL,
+        data=event
+    )
+
+    return response.text
+
 # print(ping())
 # print(test_get_org())
 # print(test_get_all())
 
-print(test_get_all_events()) 
+print(test_get_all_events())
+# print(test_post_event()) 
