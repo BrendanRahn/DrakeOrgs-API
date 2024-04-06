@@ -37,7 +37,15 @@ The lambda can be invoked by making a request to the URL "http://localhost:9000/
 Tests have been written in the /tests folder in the repo that use the python requests library to hit the lambda with tests
 
 
+# POST event
+Events will be posted to the events table in dynamodb. Events will be have to be sent from the app
+as a post request to https://d4kfv1hyq7.execute-api.us-east-1.amazonaws.com/DrakeOrgs-API/events/post-event
+with the event data in the format of a dictionary in the body of the post request. The format of the dict from the app is as follows:
+
+-post body: {
+    "title": "event-title (string)"
+    "description": "description" (string)
+    "date": "MM-DD-YYYY" (string) (must be in specified format)
+}
 
 # TODO:
-- Creat script for compressing lambda to zip file and uploading to AWS
-- Make mounted volume for container so changes made to the lambda file(s) can be reflected in the container without reloading (need to make sure that is possible) 

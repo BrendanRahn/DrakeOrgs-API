@@ -23,24 +23,31 @@ def lambda_handler(event, context):
 
     if req_route_key == "GET /DrakeOrgs-API/get":
 
-        validation = org_data_handler.validate_lambda_event(event)
+        org_validation = org_data_handler.validate_org_request(event)
 
-        if validation["is_valid"] == True:
-            return org_data_handler.get_org_by_name(validation["body"])
+        if org_validation["is_valid"] == True:
+            return org_data_handler.get_org_by_name(org_validation["body"])
         
-        elif validation["is_valid"] == False:
-            return error_response(validation["body"])
+        elif org_validation["is_valid"] == False:
+            return error_response(org_validation["body"])
         
 
     if req_route_key == "GET /DrakeOrgs-API/events/get/all":
         return event_handler.get_all_events()
     
     if req_route_key == "POST /DrakeOrgs-API/events/post-event":
-        return "here"
+        #event data should be in the body of the post request
+        event_validation = event_handler.validate_event_data(event["body"])
+        if event_validation["is_valid"] == False:
+            return error_response(event_validation["body"])
+        
+        elif event_validation["is_valid"] == True:
+            return event_handler.post_event()
+
 
     else:
         return error_response(
-            f'(error, path "{req_route_key}" not found. Ask Brendan to set up cloudwatch accounts for debugging)'
+            f'(error, path "{req_route_key}" not found. Check cloudwatch accounts for debugging)'
             )
         
 
