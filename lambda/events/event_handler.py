@@ -24,11 +24,6 @@ def post_event(event: dict):
 
 
 
-
-    
-
-    
-
 def get_all_events():
 
     table = connect_dynamo("events")
@@ -39,32 +34,36 @@ def get_all_events():
             "body": json.dumps(data)}
     
 
-    
-
 
 def validate_event_data(body: dict):
 
-    #catch errors with formating
+    ########################
+    if "title" not in body:
+        return param_not_found("title")
+    
     event_title = body["title"]
     if type(event_title) != str:
-        return {
-                "is_valid": False,
-                "body": "error, title is not of type string"
-                }
+        return type_not_string("title")
+    
+
+    ##########################
+    if "description" not in body:
+        return param_not_found("description")
     
     event_description = body["description"]
     if type(event_description) != str:
-        return {
-                "is_valid": False,
-                "body": "error, description is not of type string"
-                }
+        return type_not_string("description")
     
+
+
+
+    ###########################
+    if "date" not in body:
+        return param_not_found("date")
+
     event_date = body["date"]
     if type(event_date) != str:
-        return {
-                "is_valid": False,
-                "body": "error, date is not of type string"
-                }
+        return type_not_string("date")
     
     if not re.match(r'^\d{2}-\d{2}-\d{4}$', event_date):
         return {
@@ -84,7 +83,14 @@ def validate_event_data(body: dict):
         }
     
 
+def type_not_string(parameter: str):
+    return {
+            "is_valid": False,
+            "body": f"error, {parameter} is not of type string"
+            }
 
-
-
-    print("")
+def param_not_found(parameter: str):
+    return {
+            "is_valid": False,
+            "body": f"error, {parameter} is not in format MM-DD-YYYY"
+            }

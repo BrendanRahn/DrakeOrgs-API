@@ -42,7 +42,7 @@ def lambda_handler(event, context):
             return error_response(event_validation["body"])
         
         elif event_validation["is_valid"] == True:
-            return event_handler.post_event()
+            return event_handler.post_event(event_validation["body"])
 
 
     else:

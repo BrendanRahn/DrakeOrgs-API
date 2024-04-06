@@ -7,7 +7,7 @@ def connect_dynamo(table_name):
      dynamo = boto3.resource('dynamodb')
      return dynamo.Table(table_name)
 
-def validate_lambda_event(event: dict):
+def validate_org_request(event: dict):
 
     if "queryStringParameters" not in event:
             return {
