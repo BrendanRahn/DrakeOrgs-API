@@ -3,10 +3,17 @@
 
 import requests
 import json
+import pytest
+
+
 
 
 CONTAINER_URL = "http://localhost:9000/2015-03-31/functions/function/invocations"
 
+
+
+
+######################################
 def ping():
     event = json.dumps({
             "routeKey": "GET /DrakeOrgs-API/ping"
@@ -57,9 +64,9 @@ def test_get_all_events():
 
     return response.text
 
-def test_post_event():
+def test_put_event():
     event = json.dumps({
-        "routeKey": "POST /DrakeOrgs-API/events/post-event",
+        "routeKey": "PUT /DrakeOrgs-API/events/post-event",
         "body": {
             "title": "test",
             "description": "this is a test",
@@ -78,5 +85,6 @@ def test_post_event():
 # print(test_get_org())
 # print(test_get_all())
 
-print(test_get_all_events())
-# print(test_post_event()) 
+
+# print(test_get_all_events())
+print(test_put_event()) 

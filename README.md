@@ -39,7 +39,7 @@ Tests have been written in the /tests folder in the repo that use the python req
 
 # POST event
 Events will be posted to the events table in dynamodb. Events will be have to be sent from the app
-as a post request to https://d4kfv1hyq7.execute-api.us-east-1.amazonaws.com/DrakeOrgs-API/events/post-event
+as a post request to https://d4kfv1hyq7.execute-api.us-east-1.amazonaws.com/DrakeOrgs-API/events/put-event
 with the event data in the format of a dictionary in the body of the post request. The format of the dict from the app is as follows:
 
 -post body: {
@@ -47,5 +47,6 @@ with the event data in the format of a dictionary in the body of the post reques
     "description": "description" (string)
     "date": "MM-DD-YYYY" (string) (must be in specified format)
 }
+
 
 # TODO:
