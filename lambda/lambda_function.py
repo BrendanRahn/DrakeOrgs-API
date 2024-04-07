@@ -35,7 +35,7 @@ def lambda_handler(event, context):
         case "GET /DrakeOrgs-API/events/get/all":
             return event_handler.get_all_events()
 
-        case "PUT /DrakeOrgs-API/events/post-event":
+        case "PUT /DrakeOrgs-API/events/put-event":
             event_validation = event_handler.validate_event_data(event["body"])
 
             if event_validation["is_valid"] == False:

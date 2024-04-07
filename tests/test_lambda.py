@@ -66,7 +66,7 @@ def test_get_all_events():
 
 def test_put_event():
     event = json.dumps({
-        "routeKey": "PUT /DrakeOrgs-API/events/post-event",
+        "routeKey": "PUT /DrakeOrgs-API/events/put-event",
         "body": {
             "title": "test",
             "description": "this is a test",
