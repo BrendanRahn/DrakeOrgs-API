@@ -51,6 +51,14 @@ with the event data in the format of a dictionary in the body of the put request
     }
 }
 
+Notes:
+- Currently the event title is the primary key in the dynamo table, any put requests with the same title will overwrite the current entry in the table
+- pros:
+- - if there is an error and multiple requests end up getting sent with the same info, this will prevent duplicate records
+- cons:
+- - How often will there be events from different orgs with the same title (one would overwrite the other) (-this is probably a dealbreaker)
+ - - solution: make composite key with event id (add uuid in api handling)
+
 # GET events
 A list of all events can be requested at 
 https://d4kfv1hyq7.execute-api.us-east-1.amazonaws.com/DrakeOrgs-API/events/get/all
