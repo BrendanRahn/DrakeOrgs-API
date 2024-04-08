@@ -38,6 +38,32 @@ def get_all_events():
 def validate_event_data(data: dict):
 
     
+    ########################
+    if "org-name" not in data:
+        return param_not_found("org-name")
+    
+    org_name = data["org-name"]
+    if type(org_name) != str:
+        return type_not_string("org-name")
+    
+    
+    ########################
+    if "contact-name" not in data:
+        return param_not_found("contact-name")
+    
+    contact_name = data["contact-name"]
+    if type(contact_name) != str:
+        return type_not_string("contact-name")
+    
+    
+    ########################
+    if "contact-email" not in data:
+        return param_not_found("contact-email")
+    
+    contact_email = data["contact-email"]
+    if type(contact_email) not in data:
+        return type_not_string("contact-email")
+    
 
     ########################
     if "title" not in data:
@@ -56,6 +82,14 @@ def validate_event_data(data: dict):
     if type(event_description) != str:
         return type_not_string("description")
     
+
+    ###########################
+    if "location" not in data:
+        return param_not_found("location")
+    
+    location = data["location"]
+    if type(location) != str:
+        return type_not_string("location")
 
 
     ###########################
@@ -77,17 +111,21 @@ def validate_event_data(data: dict):
         return {
             "is_valid": True,
             "body": {
+                "org-name": org_name,
+                "contact-name": contact_name,
+                "contact-email": contact_email,
                 "title": event_title,
                 "description": event_description,
+                "location": location,
                 "date": event_date
             }
         }
     
 
-def type_not_string(parameter: str):
+def type_not_string(param_name: str, param_type: type):
     return {
             "is_valid": False,
-            "body": f"error, {parameter} is not of type string"
+            "body": f"error, {param_name} is of type {param_type}, not str"
             }
 
 def param_not_found(parameter: str):
