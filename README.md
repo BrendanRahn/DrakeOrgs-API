@@ -45,8 +45,12 @@ with the event data in the format of a dictionary in the body of the put request
 -(put body): {
 
     "data": {
-        "title": "event-title (string)"
+        "org-name": "org name" (string)
+        "contact-name": "contact name" (string)
+        "contact-email" "contact email" (string)
+        "title": "event-title" (string)
         "description": "description" (string)
+        "location": "event location" (string)
         "date": "MM-DD-YYYY" (string) (must be in specified format)
     }
 }
