@@ -61,7 +61,7 @@ def validate_event_data(data: dict):
         return param_not_found("contact-email")
     
     contact_email = data["contact-email"]
-    if type(contact_email) not in data:
+    if type(contact_email) != str:
         return type_not_string("contact-email", type(contact_email))
     
 

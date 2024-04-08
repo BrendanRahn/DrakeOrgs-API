@@ -69,8 +69,12 @@ def test_put_event():
             "routeKey": "PUT /DrakeOrgs-API/events/put-event",
             "body": json.dumps({
                 "data": {
+                    "org-name": "my_org",
+                    "contact-name": "Fred",
+                    "contact-email": "Fred123@hotmail.com",
                     "title": "test",
                     "description": "this is a test",
+                    "location": "my house",
                     "date": "02-10-2004"
                 }
             } )
