@@ -93,5 +93,5 @@ def test_put_event():
 # print(test_get_all())
 
 
-# print(test_get_all_events())
-print(test_put_event()) 
+print(test_get_all_events())
+# print(test_put_event()) 

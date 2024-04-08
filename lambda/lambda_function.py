@@ -40,9 +40,9 @@ def lambda_handler(event, context):
 
             #api gateway passes body as a json-formatted string, convert with json.loads()
             json_body = json.loads(event["body"])
+            
 
             event_validation = event_handler.validate_event_data(json_body["data"])
-
 
             if event_validation["is_valid"] == False:
                 return error_response(event_validation["body"])
