@@ -44,7 +44,7 @@ def validate_event_data(data: dict):
     
     org_name = data["org-name"]
     if type(org_name) != str:
-        return type_not_string("org-name")
+        return type_not_string("org-name", type(org_name))
     
     
     ########################
@@ -53,7 +53,7 @@ def validate_event_data(data: dict):
     
     contact_name = data["contact-name"]
     if type(contact_name) != str:
-        return type_not_string("contact-name")
+        return type_not_string("contact-name", type(contact_name))
     
     
     ########################
@@ -62,7 +62,7 @@ def validate_event_data(data: dict):
     
     contact_email = data["contact-email"]
     if type(contact_email) not in data:
-        return type_not_string("contact-email")
+        return type_not_string("contact-email", type(contact_email))
     
 
     ########################
@@ -71,7 +71,7 @@ def validate_event_data(data: dict):
     
     event_title = data["title"]
     if type(event_title) != str:
-        return type_not_string("title")
+        return type_not_string("title", type(event_title))
     
 
     ##########################
@@ -80,16 +80,16 @@ def validate_event_data(data: dict):
     
     event_description = data["description"]
     if type(event_description) != str:
-        return type_not_string("description")
+        return type_not_string("description", type(event_description))
     
 
     ###########################
     if "location" not in data:
         return param_not_found("location")
     
-    location = data["location"]
-    if type(location) != str:
-        return type_not_string("location")
+    event_location = data["location"]
+    if type(event_location) != str:
+        return type_not_string("location", type(event_location))
 
 
     ###########################
@@ -98,7 +98,7 @@ def validate_event_data(data: dict):
 
     event_date = data["date"]
     if type(event_date) != str:
-        return type_not_string("date")
+        return type_not_string("date", type(event_date))
     
     if not re.match(r'^\d{2}-\d{2}-\d{4}$', event_date):
         return {
@@ -116,7 +116,7 @@ def validate_event_data(data: dict):
                 "contact-email": contact_email,
                 "title": event_title,
                 "description": event_description,
-                "location": location,
+                "location": event_location,
                 "date": event_date
             }
         }
