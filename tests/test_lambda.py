@@ -65,14 +65,17 @@ def test_get_all_events():
     return response.text
 
 def test_put_event():
-    event = json.dumps({
-        "routeKey": "PUT /DrakeOrgs-API/events/put-event",
-        "body": {
-            "title": "test",
-            "description": "this is a test",
-            "date": "02-10-2004"
-        }
-    })
+    data = {
+            "routeKey": "PUT /DrakeOrgs-API/events/put-event",
+            "body": json.dumps({
+                "data": {
+                    "title": "test",
+                    "description": "this is a test",
+                    "date": "02-10-2004"
+                }
+            } )
+    }
+    event = json.dumps(data)
 
     response = requests.post(
         CONTAINER_URL,

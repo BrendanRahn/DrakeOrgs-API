@@ -35,32 +35,34 @@ def get_all_events():
     
 
 
-def validate_event_data(body: dict):
+def validate_event_data(data: dict):
+
+    
 
     ########################
-    if "title" not in body:
+    if "title" not in data:
         return param_not_found("title")
     
-    event_title = body["title"]
+    event_title = data["title"]
     if type(event_title) != str:
         return type_not_string("title")
     
 
     ##########################
-    if "description" not in body:
+    if "description" not in data:
         return param_not_found("description")
     
-    event_description = body["description"]
+    event_description = data["description"]
     if type(event_description) != str:
         return type_not_string("description")
     
 
 
     ###########################
-    if "date" not in body:
+    if "date" not in data:
         return param_not_found("date")
 
-    event_date = body["date"]
+    event_date = data["date"]
     if type(event_date) != str:
         return type_not_string("date")
     
@@ -91,5 +93,5 @@ def type_not_string(parameter: str):
 def param_not_found(parameter: str):
     return {
             "is_valid": False,
-            "body": f"error, {parameter} is not in format MM-DD-YYYY"
+            "body": f"error, {parameter} not in data"
             }
