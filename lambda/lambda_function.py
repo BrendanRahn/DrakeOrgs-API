@@ -49,6 +49,12 @@ def lambda_handler(event, context):
             
             elif event_validation["is_valid"] == True:
                 return event_handler.put_event(event_validation["body"])
+            
+
+        #not an api route, this is triggered every 24hours by an EventBridge scheduler
+        case "DEL /expired-events":
+            print("get date")
+        
 
         case _ :
             return error_response(

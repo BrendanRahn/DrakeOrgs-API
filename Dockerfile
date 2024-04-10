@@ -14,7 +14,7 @@ COPY ./lambda_rie ${rie_DIR}
 
 # Install the function's dependencies
 COPY ./requirements.txt .
-COPY ./us-east-1-bundle.pem .
+
 
 RUN pip install -r requirements.txt
 
