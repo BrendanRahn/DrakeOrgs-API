@@ -51,7 +51,7 @@ with the event data in the format of a dictionary in the body of the put request
         "title": "event-title" (string)
         "description": "description" (string)
         "location": "event location" (string)
-        "date": "MM-DD-YYYY" (string) (must be in specified format)
+        "date": "MM-DD-YY" (string) (must be in specified format)
     }
 }
 
