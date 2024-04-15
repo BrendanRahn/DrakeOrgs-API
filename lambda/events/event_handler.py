@@ -9,6 +9,10 @@ def connect_dynamo(table_name):
      dynamo = boto3.resource('dynamodb')
      return dynamo.Table(table_name)
 
+def del_expired_events(date):
+    print("")
+
+
 def put_event(event: dict):
 
 
@@ -100,10 +104,10 @@ def validate_event_data(data: dict):
     if type(event_date) != str:
         return type_not_string("date", type(event_date))
     
-    if not re.match(r'^\d{2}-\d{2}-\d{4}$', event_date):
+    if not re.match(r'^\d{2}-\d{2}-\d{2}$', event_date):
         return {
                 "is_valid": False,
-                "body": "error, date is not in format MM-DD-YYYY"
+                "body": "error, date is not in format MM-DD-YY"
                 }
     
 

@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import datetime
 
 from .org_data import org_data_handler
 from .events import event_handler
@@ -53,6 +54,11 @@ def lambda_handler(event, context):
 
         #not an api route, this is triggered every 24hours by an EventBridge scheduler
         case "DEL /expired-events":
+
+            cur_date = datetime.date.today()
+            #str_date = datetime.strptime(date_string, "%m-%d-%y")
+
+
             print("get date")
         
 
