@@ -75,7 +75,8 @@ def test_put_event():
                     "title": "test",
                     "description": "this is a test",
                     "location": "my house",
-                    "date": "02-10-2004"
+                    "date": "02-10-04",
+                    "time": "13:01"
                 }
             } )
     }
@@ -93,5 +94,5 @@ def test_put_event():
 # print(test_get_all())
 
 
-print(test_get_all_events())
-# print(test_put_event()) 
+# print(test_get_all_events())
+print(test_put_event()) 

@@ -110,20 +110,36 @@ def validate_event_data(data: dict):
                 "body": "error, date is not in format MM-DD-YY"
                 }
     
-
-    else:
+    event_time = data["time"]
+    if type(event_time) != str:
+        return type_not_string("time", type(event_time))
+    
+    if not re.match(r'^\d{2}:\d{2}$', event_time):
         return {
-            "is_valid": True,
-            "body": {
-                "org-name": org_name,
-                "contact-name": contact_name,
-                "contact-email": contact_email,
-                "title": event_title,
-                "description": event_description,
-                "location": event_location,
-                "date": event_date
-            }
+            "is_valid": False,
+            "body": "error, time is not in format HH:mm"
         }
+    
+    hours = int(event_time[0:2])
+    event_time = convert_time_AMPM(event_time)
+    
+    
+    
+# HH:mm
+
+    return {
+        "is_valid": True,
+        "body": {
+            "org-name": org_name,
+            "contact-name": contact_name,
+            "contact-email": contact_email,
+            "title": event_title,
+            "description": event_description,
+            "location": event_location,
+            "date": event_date,
+            "time": event_time
+        }
+    }
     
 
 def type_not_string(param_name: str, param_type: type):
@@ -137,3 +153,22 @@ def param_not_found(parameter: str):
             "is_valid": False,
             "body": f"error, {parameter} not in data"
             }
+
+
+def convert_time_AMPM(time):
+    hours = int(time[0:2])
+    minutes = time[2:5]
+    #between 12AM and 12PM
+    if hours // 12 == 0:
+        #00 hours case, equates to 12AM
+        if hours == 0:
+            return "12" + minutes + " AM"
+        else:
+            return time + " AM"
+    #between 12PM and 12AM
+    else:
+        if hours % 12 == 0:
+            return time + " PM"
+        #12 hours case (12 % 12 is 0)
+        else:
+            return str(hours % 12) + minutes + " PM"
